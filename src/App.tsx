@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { UrlForm } from './components/UrlForm';
 import { UrlList } from './components/UrlList';
 import { RedirectHandler } from './components/RedirectHandler';
+import { LandingPage } from './components/LandingPage';
 import { ShortenedUrl, UrlFormData, UrlUpdateData } from './types/url';
 import { AuthData, User } from './types/auth';
 import { saveUrl, getUrls, updateUrl, findUrlByCustomPath } from './utils/storage';
@@ -47,6 +48,11 @@ function App() {
   const handleSubmit = (data: UrlFormData) => {
     if (!user) return;
 
+    if (user.plan === 'free' && urls.length >= 1) {
+      alert('Free plan users can only have 1 active short URL. Please upgrade to create more.');
+      return;
+    }
+
     const existingUrl = findUrlByCustomPath(data.customPath);
     if (existingUrl) {
       alert('This custom path is already taken. Please choose another one.');
@@ -82,9 +88,12 @@ function App() {
       
       <main className="container mx-auto px-4 py-8">
         {!user ? (
-          <div className="flex justify-center items-center pt-8">
-            <AuthForm onLogin={handleLogin} onRegister={handleRegister} />
-          </div>
+          <>
+            <LandingPage />
+            <div className="mt-16">
+              <AuthForm onLogin={handleLogin} onRegister={handleRegister} />
+            </div>
+          </>
         ) : (
           <div className="space-y-8">
             <div className="max-w-2xl mx-auto">

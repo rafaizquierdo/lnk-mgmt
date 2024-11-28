@@ -16,7 +16,7 @@ export const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
             <div className="bg-blue-500 p-2 rounded-full">
               <Link size={24} className="text-white" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">URL Shortener</h1>
+            <h1 className="text-xl font-bold text-gray-900">lnk-mgmt</h1>
           </div>
           
           {user && (
